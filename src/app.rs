@@ -157,9 +157,7 @@ impl KpiApp {
         out.push_str(&format!("Подключено НПЛ - {}\n", self.npl_connected.trim()));
         out.push('\n');
         for p in &self.products {
-            if p.count > 0 {
-                out.push_str(&format!("{} - {}\n", p.def.name, p.count));
-            }
+            out.push_str(&format!("{} - {}\n", p.def.name, p.count));
         }
         out.push('\n');
         out.push_str(&format!("Прк - 0/{}\n", self.daily_total()));
