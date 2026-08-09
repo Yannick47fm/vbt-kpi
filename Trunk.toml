@@ -1,0 +1,15 @@
+[tools]
+# Версия wasm-bindgen-cli, которую Trunk скачает для сборки WASM.
+# Должна совпадать с wasm-bindgen в Cargo.lock (сейчас 0.2.127).
+# После обновления зависимостей: cargo update -p wasm-bindgen и сверьте версии.
+wasm_bindgen = "0.2.127"
+
+[build]
+target = "index.html"
+dist = "dist"
+public_url = "/"
+
+[serve]
+addresses = ["127.0.0.1"]
+port = 8080
+open = false

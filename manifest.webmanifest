@@ -1,0 +1,17 @@
+{
+  "name": "KPI DSA — учёт баллов",
+  "short_name": "KPI DSA",
+  "description": "Подсчёт ежедневных KPI-баллов сотрудников DSA",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "ru",
+  "background_color": "#0b0f17",
+  "theme_color": "#005ff9",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
