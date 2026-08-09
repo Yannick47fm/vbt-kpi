@@ -157,10 +157,14 @@ impl KpiApp {
         out.push_str(&format!("Подключено НПЛ - {}\n", self.npl_connected.trim()));
         out.push('\n');
         for p in &self.products {
-            out.push_str(&format!("{} - {}\n", p.def.name, p.count));
+            out.push_str(&format!("{} - {}\n", p.def.name.to_uppercase(), p.count));
         }
         out.push('\n');
-        out.push_str(&format!("Прк - 0/{}\n", self.daily_total()));
+        out.push_str(&format!(
+            "Прк - 0/{}/{}\n",
+            self.daily_total(),
+            self.monthly_total
+        ));
         out
     }
 
@@ -284,16 +288,21 @@ impl KpiApp {
 impl eframe::App for KpiApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         let panel_fill = ctx.style().visuals.panel_fill;
-        egui::CentralPanel::default()
-            .frame(
-                egui::Frame::default()
-                    .fill(panel_fill)
-                    .inner_margin(Margin::symmetric(12.0, 12.0)),
-            )
+        let frame = egui::Frame::default()
+            .fill(panel_fill)
+            .inner_margin(Margin::symmetric(12.0, 12.0));
+
+        egui::TopBottomPanel::bottom("bottom_bar")
+            .frame(frame.clone())
             .show(ctx, |ui| {
-                self.header_ui(ui);
-                self.controls_ui(ui);
                 ui.separator();
+                self.controls_ui(ui);
+                self.header_ui(ui);
+            });
+
+        egui::CentralPanel::default()
+            .frame(frame)
+            .show(ctx, |ui| {
                 egui::ScrollArea::vertical()
                     .auto_shrink([false, false])
                     .show(ui, |ui| self.products_ui(ui));
@@ -311,7 +320,7 @@ fn product_card(ui: &mut egui::Ui, p: &mut Product) {
 
             ui.horizontal(|ui| {
                 ui.vertical(|ui| {
-                    ui.label(RichText::new(p.def.name).size(15.0).strong());
+                    ui.label(RichText::new(p.def.name.to_uppercase()).size(15.0).strong());
                     if !p.def.note.is_empty() {
                         ui.label(RichText::new(p.def.note).size(12.0).weak());
                     }
